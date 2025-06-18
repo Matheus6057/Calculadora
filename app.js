@@ -1,27 +1,31 @@
-// Função para adicionar valores ao display
-function appendToDisplay(value) {
-    document.getElementById('display').value += value;
-}
+function iniciarCalculadora() {
+  const form = document.getElementById('calcForm');
+  form.addEventListener('submit', function(event) {
+    event.preventDefault(); // impede o reload da página
 
-// Função para limpar o display
-function clearDisplay() {
-    document.getElementById('display').value = '';
-}
+    const valor1 = parseFloat(document.getElementById('valor1').value);
+    const valor2 = parseFloat(document.getElementById('valor2').value);
+    const operacao = document.getElementById('operacao').value;
+    const resultadoEl = document.getElementById('resultado');
+    let resultado = 0;
 
-// Função para deletar o último caractere
-function deleteLast() {
-    let display = document.getElementById('display');
-    display.value = display.value.slice(0, -1);
-}
-
-// Função para calcular o resultado
-function calculate() {
-    let display = document.getElementById('display');
-    try {
-        // Usa a função eval para calcular a expressão no display
-        display.value = eval(display.value);
-    } catch (e) {
-        // Em caso de erro (ex: divisão por zero), exibe "Erro"
-        display.value = 'Erro';
+    switch (operacao) {
+      case 'soma':
+        resultado = valor1 + valor2;
+        break;
+      case 'subtracao':
+        resultado = valor1 - valor2;
+        break;
+      case 'multiplicacao':
+        resultado = valor1 * valor2;
+        break;
+      case 'divisao':
+        resultado = valor2 !== 0 ? (valor1 / valor2) : 'Erro (divisão por zero)';
+        break;
+      default:
+        resultado = 'Operação inválida';
     }
+
+    resultadoEl.textContent = resultado;
+  });
 }
